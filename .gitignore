@@ -1,0 +1,6 @@
+terraform.tfstate
+terraform.tfstate.*
+.terraform
+.DS_Store
+at_image_resize_lambda.zip
+

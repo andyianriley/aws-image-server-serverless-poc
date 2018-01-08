@@ -1,0 +1,10 @@
+version: "3.3"
+services:
+  aws_lambda_node_6103:
+    hostname: aws_lambda_node_6103
+    container_name: aws_lambda_node_6103
+    image: eu.gcr.io/k8-discovery-185615/aws_lambda_node_6103
+    working_dir: /workspace
+    volumes:
+        - ./src:/workspace
+    command: "/bin/bash -c \"source /root/.nvm/nvm.sh; npm install\""

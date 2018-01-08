@@ -3,4 +3,4 @@ terraform.tfstate.*
 .terraform
 .DS_Store
 at_image_resize_lambda.zip
-
+src/node_modules/

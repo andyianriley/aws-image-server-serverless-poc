@@ -3,6 +3,7 @@ set -e
 
 rm -rf src/node_modules
 
+docker-compose build
 docker-compose up --force-recreate -d
 
 docker logs -f aws_lambda_node_6103

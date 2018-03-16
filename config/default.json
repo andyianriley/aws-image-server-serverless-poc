@@ -1,0 +1,11 @@
+{
+    "service_name": "aws-image-server-poc",
+    "region": "eu-west-1",
+    "environment": "dev",
+    "state_bucket_name": "aws-image-server-poc-state",
+    "image_bucket_name": "aws-image-server-poc",
+    "image_bucket_path": "/media",
+    "bucket_user_name": "aws-image-server-poc-user",
+    "lambda_name": "aws-image-server-poc-resize",
+    "external_image_url": "http://aws-image-server-poc.s3-website-eu-west-1.amazonaws.com"
+}

@@ -1,0 +1,22 @@
+Resources:
+  S3BucketMedia:
+    Type: AWS::S3::Bucket
+    Properties:
+      BucketName: ${self:custom.config.image_bucket_name}
+      AccessControl: PublicRead
+      WebsiteConfiguration:
+        IndexDocument: index.html
+        ErrorDocument: error.html
+        RoutingRules:
+          - RoutingRuleCondition:
+              KeyPrefixEquals: ''
+              HttpErrorCodeReturnedEquals: 404
+            RedirectRule:
+              Protocol: https
+              HostName:
+                Fn::Join:
+                  - ""
+                  - - Ref: ApiGatewayRestApi
+                    - ".execute-api.${env:AWS_DEFAULT_REGION, self:custom.config.region}.amazonaws.com"
+              ReplaceKeyPrefixWith: ${self:custom.config.environment}/resize?key=
+              HttpRedirectCode: 307

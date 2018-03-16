@@ -1,12 +1,15 @@
-version: "3.3"
+version: '3.2'
+
 services:
-  aws_lambda_node_6103:
-    hostname: aws_lambda_node_6103
-    container_name: aws_lambda_node_6103
-    build: 
+  serverless:
+    container_name: serverless
+    build:
         context: .
         dockerfile: Dockerfile
     working_dir: /workspace
     volumes:
-        - ./src:/workspace
-    command: "/bin/bash -c \"source /root/.nvm/nvm.sh; npm install\""
+        - ./:/workspace
+    environment:
+      - AWS_ACCESS_KEY_ID=$AWS_ACCESS_KEY_ID
+      - AWS_SECRET_ACCESS_KEY=$AWS_SECRET_ACCESS_KEY
+    command: "/bin/bash -c \"source /root/.nvm/nvm.sh; npm install && npm run deploy\""

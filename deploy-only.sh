@@ -5,9 +5,6 @@ export AWS_SECRET_ACCESS_KEY=$(aws --profile default configure get aws_secret_ac
 
 set -e
 
-rm -rf node_modules
-
-docker-compose build
 docker-compose run serverless
 
 docker logs -f serverless

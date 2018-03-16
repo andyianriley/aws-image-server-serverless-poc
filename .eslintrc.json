@@ -1,0 +1,11 @@
+{
+    "parser": "babel-eslint",
+    "extends": ["plugin:prettier/recommended"],
+    "rules": {
+        "prettier/prettier": ["error", {
+            "semi": false,
+            "singleQuote": true,
+            "tabWidth": 4
+        }]
+    }
+}

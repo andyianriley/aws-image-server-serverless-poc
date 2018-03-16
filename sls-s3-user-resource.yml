@@ -1,0 +1,16 @@
+Resources:
+  S3BucketUser:
+    Type: AWS::IAM::User
+    Properties:
+      UserName: ${self:custom.config.bucket_user_name}
+      Policies:
+        - PolicyName: S3Crud
+          PolicyDocument:
+            Version: '2012-10-17'
+            Statement:
+              - Effect: Allow
+                Action:
+                  - s3:PutObject
+                  - s3:GetObject
+                  - s3:DeleteObject
+                Resource: arn:aws:s3:::${self:custom.config.image_bucket_name}${self:custom.config.image_bucket_path}/*

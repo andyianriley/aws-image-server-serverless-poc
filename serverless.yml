@@ -1,0 +1,57 @@
+service: ${self:custom.config.service_name}
+
+plugins:
+  - serverless-webpack
+  - serverless-api-stage
+  - serverless-offline
+
+custom:
+  config: ${file(config/default.json)}
+  stageSettings:
+    MethodSettings:
+      DataTraceEnabled: true
+      HttpMethod: "*"
+      LoggingLevel: INFO
+      ResourcePath: "/*"
+      MetricsEnabled: true
+  webpackIncludeModules:
+    forceInclude:
+        - sharp
+  serverless-offline:
+  port: 4000
+
+provider:
+  name: aws
+  stage: ${self:custom.config.environment}
+  region: ${env:AWS_DEFAULT_REGION, self:custom.config.region}
+  deploymentBucket: ${self:custom.config.state_bucket_name}
+  runtime: nodejs6.10
+  memorySize: 1536
+  timeout: 10
+  versionFunctions: true
+  iamRoleStatements:
+    - Effect: Allow
+      Action:
+        - s3:*
+      Resource:
+        Fn::Join:
+           - ""
+           - - "arn:aws:s3:::"
+             - Ref: S3BucketMedia
+             - "/*"
+functions:
+  resize:
+    handler: src/index.handler
+    name: ${self:custom.config.lambda_name}
+    environment:
+      BUCKET: ${self:custom.config.image_bucket_name}
+      URL: ${self:custom.config.external_image_url}
+    events:
+        - http:
+            path: resize
+            method: get
+
+resources:
+  - ${file(sls-s3-bucket-resource.yml)}
+  - ${file(sls-s3-bucket-policy-resource.yml)}
+  - ${file(sls-s3-user-resource.yml)}

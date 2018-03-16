@@ -4,7 +4,7 @@ AWS Image Server POC
 This project is an example of a JS (AWS)
 [Lambda](https://aws.amazon.com/lambda/) exposed with [API
 Gateway](https://aws.amazon.com/api-gateway/), configured with
-[Terraform](https://www.terraform.io/).
+[Serverless](https://serverless.com/).
 
 
 ## Introduction
@@ -18,33 +18,27 @@ Finally the request is redirected to back to the S3 bucket to return the new ima
 
 ![overview](./overview.png)
 
-The [Terraform file](main.tf) relies on two modules: [`lambda`](lambda/) and [`api_method`](api_method/).
-This configuration creates a lambda functions on AWS Lambda, a (deployed) REST API with a single endpoint
-and a S3 bucket, and takes care of the permissions and credentials.
-
 ## Getting started
 
-You must have an [AWS account](http://aws.amazon.com/), create a user for the terraform to use.
-Next, you must [install Terraform](https://www.terraform.io/intro/getting-started/install.html).
+You must have an [AWS account](http://aws.amazon.com/), create a user for the serverless to use [see AWS Credentials] (https://serverless.com/framework/docs/providers/aws/guide/credentials/).
 
-Clone this repository, update the variables.tf to set the bucket name and aws region, then run:
+Clone this repository, update the config/default.json to set the bucket name and aws region, then run:
 
 ```
     # to setup your AWS login details
-    aws creditials
+    aws configure
 
-    # to create a zip containing the JS code
+    # AWS_ACCESS_KEY_ID and AWS_SECRET_ACCESS_KEY are now available for serverless to use in the docker container
     ./build.sh
 
-    # to create the Infrastructure
-    terraform init
-    terraform plan
-    terraform apply
 ```
+Upload an image into the root of the S3 bucket.
+You will be able to access a resized image at http://<BUCKET_NAME>.s3-website-eu-west-1.amazonaws.com/250x300/image.jpg
+
 
 You can destroy all the components by running:
 
-    $ terraform destroy
+    $ serverless remove
 
-For more information, please read [the Terraform
-documentation](https://www.terraform.io/docs/index.html).
+For more information, please read [the Serverless
+documentation](https://serverless.com/framework/docs/).
